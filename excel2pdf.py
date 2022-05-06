@@ -1,7 +1,9 @@
+"""
+Main module for the excel2pdf utility.
+"""
 import argparse
 import pdfrw
 import pandas as pd
-from datetime import date
 
 
 ANNOT_KEY = "/Annots"
@@ -51,8 +53,8 @@ def fill_pdf(input_pdf_path, output_pdf_path, data):
                 if annotation[ANNOT_FIELD_KEY]:
                     key = annotation[ANNOT_FIELD_KEY][1:-1]
                     if key in data.keys():
-                        if type(data[key]) == bool:
-                            if data[key] == True:
+                        if isinstance(data[key], bool):
+                            if data[key] is True:
                                 annotation.update(
                                     pdfrw.PdfDict(AS=pdfrw.PdfName("Yes"))
                                 )
