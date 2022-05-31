@@ -1,5 +1,5 @@
 """
-Main module for the excel2pdf utility.
+Main module for the pdfpop utility.
 """
 import argparse
 import pdfrw
@@ -15,7 +15,7 @@ WIDGET_SUBTYPE_KEY = "/Widget"
 
 
 def main():
-    """Main excel2pdf function."""
+    """Main pdfpop function."""
     args = parse_cli()
     data = build_data_dict(args.excel)
     fill_pdf(args.pdf, args.out, data)
