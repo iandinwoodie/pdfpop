@@ -1,6 +1,5 @@
 [project]
 name = "pdfpop"
-version = "0.0.1"
 description = "Populate a PDF with data from Microsoft Excel"
 readme = "README.md"
 requires-python = ">=3.4"
@@ -20,6 +19,9 @@ dependencies = [
   "pandas>=1.4.2",
   "pdfrw>=0.4"
 ]
+dynamic = [
+  "version"
+]
 
 [project.urls]
 repository = "https://github.com/iandinwoodie/pdfpop"
@@ -30,3 +32,6 @@ pdfpop = "pdfpop.__main__:main"
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "pdfpop.__version__"}
