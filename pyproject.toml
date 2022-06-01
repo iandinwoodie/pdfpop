@@ -1,0 +1,32 @@
+[project]
+name = "pdfpop"
+version = "0.0.1"
+description = "Populate a PDF with data from Microsoft Excel"
+readme = "README.md"
+requires-python = ">=3.4"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Ian Dinwoodie", email = "dinwoodieian@gmail.com"}
+]
+keywords = ["pdf", "excel", "populate"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Operating System :: OS Independent"
+]
+dependencies = [
+  "openpyxl>=3.0.9",
+  "pandas>=1.4.2",
+  "pdfrw>=0.4"
+]
+
+[project.urls]
+repository = "https://github.com/iandinwoodie/pdfpop"
+
+[project.scripts]
+pdfpop = "pdfpop:pdfpop.main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
