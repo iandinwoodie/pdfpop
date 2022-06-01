@@ -1,6 +1,6 @@
 """Allow pdfpop to be executable through `python -m pdfpop`."""
-import pdfpop
+from pdfpop.cli import main
 
 
 if __name__ == "__main__":
-    pdfpop.main()
+    cli.main()

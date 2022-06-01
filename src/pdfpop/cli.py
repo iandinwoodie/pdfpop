@@ -1,5 +1,5 @@
 """
-Main module for the pdfpop utility.
+CLI module for pdfpop.
 """
 import argparse
 import pdfrw

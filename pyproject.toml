@@ -25,7 +25,7 @@ dependencies = [
 repository = "https://github.com/iandinwoodie/pdfpop"
 
 [project.scripts]
-pdfpop = "pdfpop:pdfpop.main"
+pdfpop = "pdfpop.__main__:main"
 
 [build-system]
 requires = ["setuptools"]
