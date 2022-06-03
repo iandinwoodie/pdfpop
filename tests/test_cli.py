@@ -1,6 +1,7 @@
 """Collection of tests around pdfpop's CLI."""
 from click.testing import CliRunner
 import pytest
+from pytest_mock import mocker
 
 from pdfpop.__main__ import main
 
