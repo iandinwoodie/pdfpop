@@ -1,6 +1,13 @@
+<p align="center">
+  <img src="assets/images/pdfpop-banner.png"
+      alt="Automate PDF population with pdfpop"
+      title="pdfpop" />
+</p>
+
+---
 # pdfpop
 
-Populate a PDF with data from Microsoft Excel.
+Automate PDF population with pdfpop.
 
 ## Installation
 
