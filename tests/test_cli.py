@@ -28,3 +28,16 @@ def test_cli_help(cli_runner, help_cli_flag):
     result = cli_runner(help_cli_flag)
     assert result.exit_code == 0
     assert result.output.startswith("Usage")
+
+
+@pytest.fixture(params=["-V", "--version"])
+def version_cli_flag(request):
+    """Pytest fixture return all version invocation options."""
+    return request.param
+
+
+def test_cli_version(cli_runner, version_cli_flag):
+    """Test CLI invocation display version message with `version` flag."""
+    result = cli_runner(version_cli_flag)
+    assert result.exit_code == 0
+    assert result.output.startswith("pdfpop")

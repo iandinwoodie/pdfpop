@@ -12,7 +12,7 @@ def version_msg():
     """Return the pdfpop version message string template."""
     python_version = ".".join(map(str, sys.version_info[0:2]))
     location = pathlib.Path(__file__).resolve().parents[1]
-    return f"%(prog)s %(version)s from {location} (Python {python_version})"
+    return f"pdfpop %(version)s from {location} (Python {python_version})"
 
 
 @click.command(context_settings=dict(help_option_names=["-h", "--help"]))
