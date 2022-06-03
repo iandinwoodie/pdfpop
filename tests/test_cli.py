@@ -50,30 +50,38 @@ def output_flag(request):
     return request.param
 
 
-def test_cli_output(mocker, cli_runner, output_flag):
-    """Test CLI invocation with `output` flag."""
+def test_cli_pop(mocker, cli_runner):
+    """Test pop CLI invocation with no options."""
     mock_pdfpop = mocker.patch("pdfpop.cli.pdfpop")
 
     pdf = "tests/files/fake-form.pdf"
     excel = "tests/files/fake-data.xlsx"
-    output = "tests/fake-output.pdf"
-    result = cli_runner(pdf, excel, output_flag, output)
-
-    assert result.exit_code == 0
-    mock_pdfpop.assert_called_once_with(
-        input_pdf_path=pdf, input_excel_path=excel, output_pdf_path=output
-    )
-
-
-def test_cli_no_options(mocker, cli_runner):
-    mock_pdfpop = mocker.patch("pdfpop.cli.pdfpop")
-
-    pdf = "tests/files/fake-form.pdf"
-    excel = "tests/files/fake-data.xlsx"
-    result = cli_runner(pdf, excel)
+    result = cli_runner("pop", pdf, excel)
 
     output = "populated.pdf"
     assert result.exit_code == 0
     mock_pdfpop.assert_called_once_with(
         input_pdf_path=pdf, input_excel_path=excel, output_pdf_path=output
     )
+
+
+def test_cli_pop_output(mocker, cli_runner, output_flag):
+    """Test pop CLI invocation with `output` flag."""
+    mock_pdfpop = mocker.patch("pdfpop.cli.pdfpop")
+
+    pdf = "tests/files/fake-form.pdf"
+    excel = "tests/files/fake-data.xlsx"
+    output = "tests/fake-output.pdf"
+    result = cli_runner("pop", pdf, excel, output_flag, output)
+
+    assert result.exit_code == 0
+    mock_pdfpop.assert_called_once_with(
+        input_pdf_path=pdf, input_excel_path=excel, output_pdf_path=output
+    )
+
+
+def test_cli_no_args(mocker, cli_runner):
+    """Test CLI invocation with passing any arguments."""
+    result = cli_runner()
+    assert result.exit_code == 0
+    assert result.output.startswith("Usage")
