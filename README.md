@@ -4,8 +4,15 @@
       title="pdfpop" />
 </p>
 
+<p align="left">
+    <a href="LICENSE" alt="License">
+        <img src="https://img.shields.io/github/license/iandinwoodie/pdfpop" /></a>
+    <img src="https://img.shields.io/github/repo-size/iandinwoodie/pdfpop" />
+    <a href="https://github.com/iandinwoodie/pdfpop/releases" alt="Latest Release">
+        <img src="https://img.shields.io/github/v/tag/iandinwoodie/pdfpop" /></a>
+</p>
+
 ---
-# pdfpop
 
 Automate PDF population with pdfpop.
 
