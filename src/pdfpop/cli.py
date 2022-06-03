@@ -1,7 +1,8 @@
 """CLI module for pdfpop."""
-import click
 import pathlib
 import sys
+
+import click
 
 from pdfpop import __version__
 from pdfpop.main import pdfpop
