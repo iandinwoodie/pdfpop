@@ -11,7 +11,7 @@ WIDGET_SUBTYPE_KEY = "/Widget"
 
 
 def pdfpop(input_pdf_path, input_excel_path, output_pdf_path):
-    """Populate the PDF with data from an Excel file."""
+    """Run pdfpop just as if using it from the command line."""
     data = build_data_dict(input_excel_path)
     fill_pdf(input_pdf_path, output_pdf_path, data)
 
