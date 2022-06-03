@@ -41,3 +41,24 @@ def test_cli_version(cli_runner, version_cli_flag):
     result = cli_runner(version_cli_flag)
     assert result.exit_code == 0
     assert result.output.startswith("pdfpop")
+
+
+@pytest.fixture(params=["-o", "--output"])
+def output_flag(request):
+    """Pytest fixture return all output invocation options."""
+    return request.param
+
+
+def test_cli_output(mocker, cli_runner, output_flag):
+    """Test CLI invocation with `output` flag."""
+    mock_pdfpop = mocker.patch("pdfpop.cli.pdfpop")
+
+    pdf = "tests/files/fake-form.pdf"
+    excel = "tests/files/fake-data.xlsx"
+    output = "tests/fake-output.xlsx"
+    result = cli_runner(pdf, excel, output_flag, output)
+
+    assert result.exit_code == 0
+    mock_pdfpop.assert_called_once_with(
+        input_pdf_path=pdf, input_excel_path=excel, output_pdf_path=output
+    )
