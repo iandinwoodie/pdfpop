@@ -44,6 +44,27 @@ def test_cli_version(cli_runner, version_cli_flag):
     assert result.output.startswith("pdfpop")
 
 
+def test_cli_no_args(mocker, cli_runner):
+    """Test CLI invocation with passing any arguments."""
+    result = cli_runner()
+    assert result.exit_code == 0
+    assert result.output.startswith("Usage")
+
+
+def test_cli_list(cli_runner):
+    """Test CLI invocation of the `list` command with no options."""
+    result = cli_runner("list")
+    assert result.exit_code == 0
+    assert result.output.startswith("LIST COMMAND")
+
+
+def test_cli_add(cli_runner):
+    """Test CLI invocation of the `list` command with no options."""
+    result = cli_runner("list")
+    assert result.exit_code == 0
+    assert result.output.startswith("LIST COMMAND")
+
+
 @pytest.fixture(params=["-o", "--output"])
 def output_flag(request):
     """Pytest fixture return all output invocation options."""
@@ -51,7 +72,7 @@ def output_flag(request):
 
 
 def test_cli_pop(mocker, cli_runner):
-    """Test pop CLI invocation with no options."""
+    """Test CLI invocation of the `pop` command with no options."""
     mock_pdfpop = mocker.patch("pdfpop.cli.pdfpop")
 
     pdf = "tests/files/fake-form.pdf"
@@ -66,7 +87,7 @@ def test_cli_pop(mocker, cli_runner):
 
 
 def test_cli_pop_output(mocker, cli_runner, output_flag):
-    """Test pop CLI invocation with `output` flag."""
+    """Test CLI invocation of the `pop` command with `output` flag."""
     mock_pdfpop = mocker.patch("pdfpop.cli.pdfpop")
 
     pdf = "tests/files/fake-form.pdf"
@@ -78,10 +99,3 @@ def test_cli_pop_output(mocker, cli_runner, output_flag):
     mock_pdfpop.assert_called_once_with(
         input_pdf_path=pdf, input_excel_path=excel, output_pdf_path=output
     )
-
-
-def test_cli_no_args(mocker, cli_runner):
-    """Test CLI invocation with passing any arguments."""
-    result = cli_runner()
-    assert result.exit_code == 0
-    assert result.output.startswith("Usage")

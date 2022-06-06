@@ -5,7 +5,10 @@ import sys
 import click
 
 from pdfpop import __version__
+from pdfpop.config import get_config, init_config
 from pdfpop.main import pdfpop
+from pdfpop.state import State
+import pdfpop.commands as commands
 
 
 def version_msg():
@@ -23,13 +26,53 @@ def main():
 
 
 @main.command()
-@click.argument("pdf", type=click.Path(exists=True))
-@click.argument("excel", type=click.Path(exists=True))
+def list():
+    """Lists all forms in the local library."""
+    config = get_config()
+    init_config(config)
+    commands.list_forms(State(config))
+
+
+@main.command()
+@click.argument("name")
+@click.argument("form", type=click.Path(path_type=pathlib.Path, exists=True))
+@click.argument("description", required=False)
+def add(name, form, description):
+    """Add a form to the local library."""
+    config = get_config()
+    init_config(config)
+    state = State(config)
+    commands.add_form(state, config, form, name, description)
+    state.save()
+
+
+@main.command()
+@click.argument("name")
+def remove(name):
+    """Remove a form from the local library."""
+    config = get_config()
+    init_config(config)
+    state = State(config)
+    commands.remove_form(state, config, name)
+    state.save()
+
+
+@main.command()
+@click.argument("name")
+@click.argument("data", type=click.Path(exists=True, path_type=pathlib.Path))
 @click.option("-o", "--output", default="populated.pdf", help="Output file path.")
-def pop(pdf, excel, output):
-    """Populate a PDF file with data from Excel."""
-    print(f"Populating {pdf} with {excel} to {output}")
-    pdfpop(input_pdf_path=pdf, input_excel_path=excel, output_pdf_path=output)
+def pop(name, data, output):
+    """Populates a form with the specified data."""
+    config = get_config()
+    init_config(config)
+    state = State(config)
+    try:
+        pdf = state.get_entry(name)["path"]
+    except KeyError:
+        print(f"Form {name} not found in library.")
+        sys.exit(1)
+    print(f'Populating "{output}" using form "{name}" and data "{data}"')
+    pdfpop(in_path=pdf, data_path=data, out_path=output)
 
 
 if __name__ == "__main__":

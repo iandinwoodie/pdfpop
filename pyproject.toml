@@ -2,7 +2,7 @@
 name = "pdfpop"
 description = "Populate a PDF with data from Microsoft Excel"
 readme = "README.md"
-requires-python = ">=3.4"
+requires-python = ">=3.6"
 license = {file = "LICENSE"}
 authors = [
   {name = "Ian Dinwoodie", email = "dinwoodieian@gmail.com"}

@@ -1,17 +1,8 @@
 {
     "col_mapping": [
-        "Account Number",
         "Registration",
-        "Account Number_2",
         "Registration_2",
-        "Account Number_3",
         "Registration_3",
-        "Account Number_4",
-        "Registration_4",
-        "Account Number_5",
-        "Registration_5",
-        "Destination Portfolio Account Please complete order form on the last page",
-        "Yes",
         "Customer Name",
         "Social Security Number",
         "Legal Address Cannot be a PO Box",
@@ -33,8 +24,21 @@
         "Annual Income_2",
         "Net Worth_2",
         "Email Address_2",
-        "Government Entity YesNo_2",
-        "undefined",
+        "Government Entity YesNo_2"
+    ],
+    "custom_mapping": {
+        "undefined": "True",
+        "Yes": "True"
+    },
+    "ignored": [
+        "Account Number",
+        "Account Number_2",
+        "Account Number_3",
+        "Account Number_4",
+        "Registration_4",
+        "Account Number_5",
+        "Registration_5",
+        "Destination Portfolio Account Please complete order form on the last page",
         "undefined_2",
         "undefined_3",
         "undefined_4",
@@ -163,7 +167,5 @@
         "Account Concentrated High Dividend Yrs 21",
         "Assets allocated  amountConcentrated High Dividend Yrs 21",
         "Account #"
-    ],
-    "custom_mapping": {},
-    "ignore": []
+    ]
 }
