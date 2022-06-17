@@ -10,6 +10,8 @@
     <img src="https://img.shields.io/github/repo-size/iandinwoodie/pdfpop" />
     <a href="https://github.com/iandinwoodie/pdfpop/releases" alt="Latest Release">
         <img src="https://img.shields.io/github/v/tag/iandinwoodie/pdfpop" /></a>
+    <a href="https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml" alt="CI/CD Tests">
+        <img src="https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml/badge.svg" /></a>
 </p>
 
 ---
