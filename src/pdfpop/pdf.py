@@ -1,5 +1,37 @@
-"""Form populationg module for pdfpop."""
+"""PDF handling module for pdfpop."""
 import pdfrw
+
+
+def populate_form(in_pdf, data, suffix=None):
+    fillers = {
+        "checkbox": _checkbox,
+        "list": _listbox,
+        "text": _text_form,
+        "combo": _combobox,
+        "radio": _radio_button,
+    }
+    for page in in_pdf.pages:
+        annotations = page["/Annots"]
+        if annotations is None:
+            continue
+        for annotation in annotations:
+
+            if annotation["/Subtype"] == "/Widget":
+                if not annotation["/T"]:
+                    annotation = annotation["/Parent"]
+                key = annotation["/T"].to_unicode()
+                if key in data:
+                    ft = _field_type(annotation)
+                    fillers[ft](annotation, data[key])
+                    if suffix:
+                        new_T = pdfrw.objects.pdfstring.PdfString.encode(
+                            key + suffix
+                        )
+                        annotation.update(pdfrw.PdfDict(T=new_T))
+        in_pdf.Root.AcroForm.update(
+            pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject("true"))
+        )
+    return in_pdf
 
 
 def _text_form(annotation, value):
@@ -106,39 +138,3 @@ def _field_type(annotation):
             return "checkbox"
 
 
-def fill_form(in_pdf, data, suffix=None):
-    fillers = {
-        "checkbox": _checkbox,
-        "list": _listbox,
-        "text": _text_form,
-        "combo": _combobox,
-        "radio": _radio_button,
-    }
-    for page in in_pdf.pages:
-        annotations = page["/Annots"]
-        if annotations is None:
-            continue
-        for annotation in annotations:
-
-            if annotation["/Subtype"] == "/Widget":
-                if not annotation["/T"]:
-                    annotation = annotation["/Parent"]
-                key = annotation["/T"].to_unicode()
-                if key in data:
-                    ft = _field_type(annotation)
-                    fillers[ft](annotation, data[key])
-                    if suffix:
-                        new_T = pdfrw.objects.pdfstring.PdfString.encode(
-                            key + suffix
-                        )
-                        annotation.update(pdfrw.PdfDict(T=new_T))
-        in_pdf.Root.AcroForm.update(
-            pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject("true"))
-        )
-    return in_pdf
-
-
-def single_form_fill(in_file, data, out_file):
-    pdf = pdfrw.PdfReader(in_file)
-    out_pdf = fill_form(pdf, data)
-    pdfrw.PdfWriter().write(out_file, out_pdf)
