@@ -5,17 +5,17 @@
         "output_name": "pdfpop-example-form.pdf"
     },
     "fields": {
-        "name [text]": null,
-        "EMAIL [text]": null,
-        "Phone [text]": null,
+        "name [text]": "return data['First Name'] + ' ' + data['Last Name']",
+        "EMAIL [text]": "Email",
+        "Phone [text]": "Phone",
         "Account Number [text]": null,
         "membership_type [radio]": null,
         "extended_hours [checkbox]": null,
         "sms_alerts [checkbox]": null,
         "membership-fees [text]": null,
-        "satisfied [combo]": null,
-        "requests [list]": null,
-        "remarks [text]": null,
+        "satisfied [combo]": "Satisfied",
+        "requests [list]": "return data['Requests'].split(',')",
+        "remarks [text]": "Remarks",
         "version [text]": null,
         "date [text]": null,
         "signature [text]": null
