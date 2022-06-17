@@ -27,7 +27,7 @@ def populate_form(
                 key = annotation["/T"].to_unicode()
                 if key in data:
                     ft = _field_type(annotation)
-                    strategy[ft](annotation, data[key])
+                    strategies[ft](annotation, data[key])
         form.Root.AcroForm.update(
             pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject("true"))
         )
@@ -121,12 +121,10 @@ def _combo_box_strategy(annotation, value) -> None:
 
 def _list_box_strategy(annotation, values) -> None:
     field = annotation["/T"].to_unicode()
-    print(f'Populate combobox "{field}" with "{values}"')
     pdfstrs = []
     for value in values:
         export = None
         for each in annotation["/Opt"]:
-            print(each)
             if each[1].to_unicode() == value:
                 export = each[0].to_unicode()
         if export is None:

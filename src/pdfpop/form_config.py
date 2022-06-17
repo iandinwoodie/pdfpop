@@ -41,3 +41,8 @@ class FormConfig:
         """Save the configuration to disk."""
         with self._path.open("w") as f:
             json.dump(self._data, f, indent=4)
+
+    def load(self) -> None:
+        """Load the configuration from disk."""
+        with self._path.open() as f:
+            self._data = json.load(f)
