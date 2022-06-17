@@ -26,12 +26,38 @@ pip install pdfpop
 
 ## Usage
 
-You can run the example with the following command:
+The `pdfpop` usage consists of two steps: (1) form configuration and (2)
+execution.
+
+### Step 1. Form Configuration
+
+> ℹ️  This step only needs to be run once for each unique form.
+
+This step generates a form-specific configuration file that allows you to inform
+`pdfpop` how data should be routed from the data file to the PDF form. You can
+generate this file with the `config` command:
 
 ```bash
-cd examples
-pdfpop client-data.xlsx client-relationship-summary.pdf
+# Usage: pdfpop config <form>
+pdfpop config examples/example-form.pdf
 ```
 
-This will output a copy of the client relationship summary PDF populated with
-client data.
+This will output a `pdfpop-` prefixed JSON file in your current working
+directory (e.g., `pdfpop-example-form.json`). By default, all fields will be
+assigned a value of `null` and, therefore, will be ignored until the `null`
+value is replaced with instructions on how to populate the field. An example of
+an edited configuration file is available [here](examples/example-form.json).
+
+### Step 2. Exectuion
+
+Once you have a form configuration file you can populate your PDF form using the
+`run` command:
+
+```bash
+# Usage: pdfpop run <config> <data>
+pdfpop run examples/example-form.json examples/example-data.xlsx
+```
+
+This will generate a populated PDF form at the location prescribed by the values
+of`<output_dir>/<output_name>` in the configuration file (e.g.,
+`examples/pdfpop-example-form.pdf`).
