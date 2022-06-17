@@ -1,0 +1,23 @@
+{
+    "io": {
+        "form": "/Users/ird/dev/iandinwoodie/pdfpop/examples/example-form.pdf",
+        "output_dir": "/Users/ird/dev/iandinwoodie/pdfpop",
+        "output_name": "pdfpop-example-form.pdf"
+    },
+    "fields": {
+        "name [text]": null,
+        "EMAIL [text]": null,
+        "Phone [text]": null,
+        "Account Number [text]": null,
+        "membership_type [radio]": null,
+        "extended_hours [checkbox]": null,
+        "sms_alerts [checkbox]": null,
+        "membership-fees [text]": null,
+        "satisfied [combo]": null,
+        "requests [list]": null,
+        "remarks [text]": null,
+        "version [text]": null,
+        "date [text]": null,
+        "signature [text]": null
+    }
+}

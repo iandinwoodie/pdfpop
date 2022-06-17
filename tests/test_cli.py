@@ -1,4 +1,4 @@
-"""Collection of tests around pdfpop's CLI."""
+"""Collection of tests for pdfpop's CLI."""
 import pathlib
 import re
 
@@ -6,7 +6,7 @@ from click.testing import CliRunner
 import pytest
 from pytest_mock import mocker
 
-from pdfpop.__main__ import main
+import pdfpop.__main__
 
 
 @pytest.fixture(scope="session")
@@ -16,7 +16,7 @@ def cli_runner():
 
     def cli_main(*cli_args, **cli_kwargs):
         """Run pdfpop CLI main with the given args."""
-        return runner.invoke(main, cli_args, **cli_kwargs)
+        return runner.invoke(pdfpop.__main__.main, cli_args, **cli_kwargs)
 
     return cli_main
 
