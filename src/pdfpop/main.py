@@ -39,7 +39,7 @@ def pdfpop(in_path, data_path, out_path):
 def build_data_dict(data_path):
     """Build a dictionary of input data to be mapped to form fields."""
     df = pd.read_excel(data_path, header=0)
-    df = df.where(pd.notnull(df), None).fillna('').astype(str)
+    df = df.where(pd.notnull(df), None).fillna("").astype(str)
     return df.to_dict("records")
 
 

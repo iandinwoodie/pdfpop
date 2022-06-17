@@ -26,53 +26,34 @@ def main():
 
 
 @main.command()
-def list():
-    """Lists all forms in the local library."""
-    config = get_config()
-    init_config(config)
-    commands.list_forms(State(config))
-
-
-@main.command()
-@click.argument("name")
 @click.argument("form", type=click.Path(path_type=pathlib.Path, exists=True))
-@click.argument("description", required=False)
-def add(name, form, description):
-    """Add a form to the local library."""
-    config = get_config()
-    init_config(config)
-    state = State(config)
-    commands.add_form(state, config, form, name, description)
-    state.save()
+def config(form):
+    """Generate a PDF form configuration file."""
+    # config = get_config()
+    # init_config(config)
+    # state = State(config)
+    # commands.add_form(state, config, form, name, description)
+    # state.save()
+    print("CONFIG COMMAND")
 
 
 @main.command()
-@click.argument("name")
-def remove(name):
-    """Remove a form from the local library."""
-    config = get_config()
-    init_config(config)
-    state = State(config)
-    commands.remove_form(state, config, name)
-    state.save()
-
-
-@main.command()
-@click.argument("name")
-@click.argument("data", type=click.Path(exists=True, path_type=pathlib.Path))
-@click.option("-o", "--output", default="populated.pdf", help="Output file path.")
-def pop(name, data, output):
-    """Populates a form with the specified data."""
-    config = get_config()
-    init_config(config)
-    state = State(config)
-    try:
-        pdf = state.get_entry(name)["path"]
-    except KeyError:
-        print(f"Form {name} not found in library.")
-        sys.exit(1)
-    print(f'Populating "{output}" using form "{name}" and data "{data}"')
-    pdfpop(in_path=pdf, data_path=data, out_path=output)
+@click.argument("config", type=click.Path(path_type=pathlib.Path, exists=True))
+@click.argument("data", type=click.Path(path_type=pathlib.Path, exists=True))
+# @click.option("-o", "--output", default="populated.pdf", help="Output file path.")
+def run(config, data):
+    """Populate a PDF form with data as prescribed by the configuration file."""
+    # config = get_config()
+    # init_config(config)
+    # state = State(config)
+    # try:
+    #    pdf = state.get_entry(name)["path"]
+    # except KeyError:
+    #    print(f"Form {name} not found in library.")
+    #    sys.exit(1)
+    # print(f'Populating "{output}" using form "{name}" and data "{data}"')
+    # pdfpop(in_path=pdf, data_path=data, out_path=output)
+    print("RUN COMMAND")
 
 
 if __name__ == "__main__":
