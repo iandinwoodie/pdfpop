@@ -1,23 +1,23 @@
 {
     "io": {
-        "form": "/Users/ird/dev/iandinwoodie/pdfpop/examples/example-form.pdf",
-        "output_dir": "/Users/ird/dev/iandinwoodie/pdfpop",
+        "form": "examples/example-form.pdf",
+        "output_dir": "examples/",
         "output_name": "pdfpop-example-form.pdf"
     },
     "fields": {
         "name [text]": "return data['First Name'] + ' ' + data['Last Name']",
         "EMAIL [text]": "Email",
         "Phone [text]": "Phone",
-        "Account Number [text]": null,
-        "membership_type [radio]": null,
-        "extended_hours [checkbox]": null,
-        "sms_alerts [checkbox]": null,
-        "membership-fees [text]": null,
+        "Account Number [text]": "Account #",
+        "membership_type [radio]": "return ['Child', 'Adult', 'Senior'].index(data['Account Type'])",
+        "extended_hours [checkbox]": "Extended Hours",
+        "sms_alerts [checkbox]": "SMS Alerts",
+        "membership-fees [text]": "Fees",
         "satisfied [combo]": "Satisfied",
         "requests [list]": "return data['Requests'].split(',')",
         "remarks [text]": "Remarks",
-        "version [text]": null,
-        "date [text]": null,
+        "version [text]": "return '1.0.0'",
+        "date [text]": "import datetime; return datetime.datetime.now().strftime('%m/%d/%Y')",
         "signature [text]": null
     }
 }
