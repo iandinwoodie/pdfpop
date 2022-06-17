@@ -1,4 +1,5 @@
 """Collection of tests around pdfpop's CLI."""
+import pathlib
 import re
 
 from click.testing import CliRunner
@@ -48,25 +49,87 @@ def test_cli_version(cli_runner, version_cli_flag):
     )
 
 
-def test_cli_no_args(mocker, cli_runner):
+def test_cli_no_args(cli_runner):
     """Test CLI invocation with passing any arguments."""
     result = cli_runner()
     assert result.exit_code == 0
     assert result.output.startswith("Usage: pdfpop")
 
 
-def test_cli_config(cli_runner):
+def test_cli_no_args_invalid_command(cli_runner):
+    """Test CLI invocation with an invalid command."""
+    result = cli_runner("invalid")
+    assert result.exit_code == 2
+    assert result.output.startswith("Usage: pdfpop")
+    assert "Error: No such command 'invalid'." in result.output
+
+
+def test_cli_no_args_invalid_option(cli_runner):
+    """Test CLI invocation with an invalid command."""
+    result = cli_runner("--invalid")
+    assert result.exit_code == 2
+    assert result.output.startswith("Usage: pdfpop")
+    assert "Error: No such option: --invalid\n" in result.output
+
+
+def test_cli_config(mocker, cli_runner):
     """Test CLI invocation of the `config` command."""
-    form = "tests/files/blank.pdf"
-    result = cli_runner("config", form)
+    mock_command = mocker.patch("pdfpop.commands.config")
+
+    form_path = pathlib.Path("tests/files/blank.pdf")
+    result = cli_runner("config", str(form_path))
+
     assert result.exit_code == 0
-    assert result.output.startswith("CONFIG COMMAND")
+    mock_command.assert_called_once_with(form_path=form_path)
 
 
-def test_cli_run(cli_runner):
+def test_cli_config_form_path_not_found(mocker, cli_runner):
+    """Test `config` command invocation with a form path that doesn't exist."""
+    mock_command = mocker.patch("pdfpop.commands.config")
+
+    form_path = pathlib.Path("tests/files/does-not-exist.pdf")
+    result = cli_runner("config", str(form_path))
+
+    assert result.exit_code == 2
+    assert "Error: Invalid value for 'FORM':" in result.output
+    mock_command.assert_not_called()
+
+
+def test_cli_run(mocker, cli_runner):
     """Test CLI invocation of the `run` command."""
-    config = "tests/files/pdfpop-blank.json"
-    data = "tests/files/empty.csv"
-    result = cli_runner("run", config, data)
+    mock_command = mocker.patch("pdfpop.commands.run")
+
+    config_path = pathlib.Path("tests/files/pdfpop-blank.json")
+    data_path = pathlib.Path("tests/files/empty.csv")
+    result = cli_runner("run", str(config_path), str(data_path))
+
     assert result.exit_code == 0
-    assert result.output.startswith("RUN COMMAND")
+    mock_command.assert_called_once_with(
+        config_path=config_path, data_path=data_path
+    )
+
+
+def test_cli_run_config_path_not_found(mocker, cli_runner):
+    """Test `run` command invocation with a config path that doesn't exist."""
+    mock_command = mocker.patch("pdfpop.commands.run")
+
+    config_path = pathlib.Path("tests/files/does-not-exist.json")
+    data_path = pathlib.Path("tests/files/empty.csv")
+    result = cli_runner("run", str(config_path), str(data_path))
+
+    assert result.exit_code == 2
+    assert "Error: Invalid value for 'CONFIG':" in result.output
+    mock_command.assert_not_called()
+
+
+def test_cli_run_data_path_not_found(mocker, cli_runner):
+    """Test `run` command invocation with a data path that doesn't exist."""
+    mock_command = mocker.patch("pdfpop.commands.run")
+
+    config_path = pathlib.Path("tests/files/pdfpop-blank.json")
+    data_path = pathlib.Path("tests/files/does-not-exist.csv")
+    result = cli_runner("run", str(config_path), str(data_path))
+
+    assert result.exit_code == 2
+    assert "Error: Invalid value for 'DATA':" in result.output
+    mock_command.assert_not_called()

@@ -51,7 +51,9 @@ def _radio_button(annotation, value):
             val_str = pdfrw.objects.pdfname.BasePdfName(f"/Off")
         each.update(pdfrw.PdfDict(AS=val_str))
 
-    annotation.update(pdfrw.PdfDict(V=pdfrw.objects.pdfname.BasePdfName(f"/{value}")))
+    annotation.update(
+        pdfrw.PdfDict(V=pdfrw.objects.pdfname.BasePdfName(f"/{value}"))
+    )
 
 
 def _combobox(annotation, value):
@@ -126,7 +128,9 @@ def fill_form(in_pdf, data, suffix=None):
                     ft = _field_type(annotation)
                     fillers[ft](annotation, data[key])
                     if suffix:
-                        new_T = pdfrw.objects.pdfstring.PdfString.encode(key + suffix)
+                        new_T = pdfrw.objects.pdfstring.PdfString.encode(
+                            key + suffix
+                        )
                         annotation.update(pdfrw.PdfDict(T=new_T))
         in_pdf.Root.AcroForm.update(
             pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject("true"))

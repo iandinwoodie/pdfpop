@@ -17,7 +17,7 @@ WIDGET_SUBTYPE_KEY = "/Widget"
 PARENT_KEY = "/Parent"
 
 
-def pdfpop(in_path, data_path, out_path):
+def pdfpop2(in_path, data_path, out_path):
     """Run pdfpop just as if using it from the command line."""
     config = get_config()
     init_config(config)
@@ -27,7 +27,10 @@ def pdfpop(in_path, data_path, out_path):
         print("No data found in Excel file. Exiting.")
         return
     elif len(data) > 1:
-        print("Muplite data rows found in Excel file. Only the first will be used.")
+        print(
+            "Muplite data rows found in Excel file. Only the first will be"
+            " used."
+        )
     data = data[0]
     with open(pathlib.Path(in_path).with_suffix(".json"), "r") as f:
         key_mapping = json.load(f)
