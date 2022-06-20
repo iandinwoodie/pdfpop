@@ -6,6 +6,7 @@ import pathlib
 import pandas as pd
 
 import pdfpop.form_config
+import pdfpop.mapper
 import pdfpop.pdf
 
 
@@ -49,13 +50,13 @@ def run(config_path: pathlib.Path, data_path: pathlib.Path) -> None:
         )
     data = data[0]
     fields = _strip_field_type(form_cfg.data["fields"])
-    mapped_data = build_mapped_data(data, fields)
+    mapped_fields = pdfpop.mapper.map_fields(fields, data)
     output_path = (
         pathlib.Path(form_cfg.data["io"]["output_dir"])
         / form_cfg.data["io"]["output_name"]
     )
     pdfpop.pdf.populate_form(
-        form_cfg.data["io"]["form"], mapped_data, output_path
+        form_cfg.data["io"]["form"], mapped_fields, output_path
     )
     print(f'\nPopulated form saved to "{output_path}".')
 
@@ -77,30 +78,3 @@ def _build_data_dict(data_path: pathlib.Path) -> dict:
 def _strip_field_type(fields: dict[str, str]) -> dict[str, str]:
     """Strip the bracket enclosed field type from the field name."""
     return {k.split(" [")[0]: v for k, v in fields.items()}
-
-
-def build_mapped_data(data, key_mapping):
-    """Build a dictionary of data mapped to form fields."""
-
-    def get_code_template() -> str:
-        return "def fn(data):\n    %s\nrv = fn(data)\n"
-
-    mapped_data = {}
-    print("\nEvent Log:")
-    ignore_list = []
-    for key, value in key_mapping.items():
-        if value is None:
-            ignore_list.append(key)
-        elif value in data:
-            print(f'Set field "{key}" to "{data[value]}"')
-            mapped_data[key] = data[value]
-        else:
-            global_env = {}
-            local_env = {"data": data}
-            full_expr = get_code_template() % value
-            exec(full_expr, global_env, local_env)
-            print(f'Set field "{key}" to "{local_env["rv"]}"')
-            mapped_data[key] = local_env["rv"]
-    for key in ignore_list:
-        print(f'Ignored field "{key}"')
-    return mapped_data
