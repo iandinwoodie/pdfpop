@@ -94,9 +94,9 @@ def test_interpret_data_access():
     assert mapped_fields == {"a1": 123, "b1": "456"}
 
 
-def test_interpret_data_access_error():
-    """Tests that mappings have data access."""
+def test_interpret_data_original_value_fallback():
+    """Tests that the original value is used when interpretation fails."""
     fields = {"a1": "data['a2']", "b1": "return data['b2']"}
     data = {"a2": 123}
-    with pytest.raises(KeyError):
-        pdfpop.form_config.interpret(fields, data)
+    mapped_fields = pdfpop.form_config.interpret(fields, data)
+    assert mapped_fields == {"a1": 123, "b1": "return data['b2']"}

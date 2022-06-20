@@ -54,8 +54,10 @@ def run(config_path: pathlib.Path, data_path: pathlib.Path) -> None:
     data = data[0]
     fields = _strip_field_type(form_cfg.data["fields"])
 
-    io = pdfpop.form_config.interpret_io(form_cfg, data)
-    fields = pdfpop.form_config.interpret(form_cfg, data, verbose=True)
+    io = pdfpop.form_config.interpret(form_cfg.data["io"], data)
+    fields = pdfpop.form_config.interpret(
+        form_cfg.data["fields"], data, verbose=True
+    )
 
     output_path = pathlib.Path(io["output_dir"]) / io["output_name"]
     pdfpop.pdf.populate_form(io["form"], fields, output_path)

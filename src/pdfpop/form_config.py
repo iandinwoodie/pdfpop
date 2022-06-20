@@ -75,11 +75,15 @@ def interpret(
             interpreted[key] = value
         else:
             global_env = {}
-            local_env = {"data": data}
+            local_env = {"data": data, "rv": None}
             expr = wrap_logic(value)
-            exec(expr, global_env, local_env)
-            rv = local_env["rv"]
-            interpreted[key] = rv if rv is not None else value
+            try:
+                exec(expr, global_env, local_env)
+            except Exception as e:
+                pass
+            interpreted[key] = (
+                local_env["rv"] if local_env["rv"] is not None else value
+            )
         if verbose:
             print(f'Set field "{key}" to "{interpreted[key]}"')
     if verbose:
