@@ -1,11 +1,8 @@
 """Form configuration handling for pdfpop."""
-import pathlib
+from __future__ import annotations
+from typing import Any
 import json
-
-
-def get_default_path(form_path: pathlib.Path) -> pathlib.Path:
-    """Return the default configuration path for the specified form."""
-    return pathlib.Path().cwd() / f"pdfpop-{form_path.stem}.json"
+import pathlib
 
 
 class FormConfig:
@@ -29,7 +26,7 @@ class FormConfig:
         return self._path
 
     @property
-    def data(self) -> dict[str, dict[str, str]]:
+    def data(self) -> dict[str, dict[str, Any]]:
         """Configuration data getter."""
         return self._data
 
@@ -46,3 +43,46 @@ class FormConfig:
         """Load the configuration from disk."""
         with self._path.open() as f:
             self._data = json.load(f)
+
+
+def get_default_path(form_path: pathlib.Path) -> pathlib.Path:
+    """Return the default configuration path for the specified form."""
+    return pathlib.Path().cwd() / f"pdfpop-{form_path.stem}.json"
+
+
+def interpret(
+    section: dict[str, Any], data: dict[str, Any], verbose: bool = False
+) -> dict[str, Any]:
+    """Interpret the configuration section."""
+
+    def wrap_logic(logic: str) -> str:
+        """Returns a function wrapping the given logic."""
+        if "return" in logic:
+            return f"def fn(data):\n    {logic}\nrv = fn(data)\n"
+        return f"rv = {logic}\n"
+
+    interpreted = {}
+    ignore_list = []
+    if verbose:
+        print("\nEvent Log:")
+    for key, value in section.items():
+        if value is None:
+            ignore_list.append(key)
+            continue
+        elif value in data:
+            interpreted[key] = data[value]
+        elif isinstance(value, int) or isinstance(value, float):
+            interpreted[key] = value
+        else:
+            global_env = {}
+            local_env = {"data": data}
+            expr = wrap_logic(value)
+            exec(expr, global_env, local_env)
+            rv = local_env["rv"]
+            interpreted[key] = rv if rv is not None else value
+        if verbose:
+            print(f'Set field "{key}" to "{interpreted[key]}"')
+    if verbose:
+        for key in ignore_list:
+            print(f'Ignored field "{key}"')
+    return interpreted

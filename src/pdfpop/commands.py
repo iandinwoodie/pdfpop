@@ -6,7 +6,6 @@ import pathlib
 import pandas as pd
 
 import pdfpop.form_config
-import pdfpop.mapper
 import pdfpop.pdf
 
 
@@ -54,14 +53,12 @@ def run(config_path: pathlib.Path, data_path: pathlib.Path) -> None:
         )
     data = data[0]
     fields = _strip_field_type(form_cfg.data["fields"])
-    mapped_fields = pdfpop.mapper.map_fields(fields, data)
-    output_path = (
-        pathlib.Path(form_cfg.data["io"]["output_dir"])
-        / form_cfg.data["io"]["output_name"]
-    )
-    pdfpop.pdf.populate_form(
-        form_cfg.data["io"]["form"], mapped_fields, output_path
-    )
+
+    io = pdfpop.form_config.interpret_io(form_cfg, data)
+    fields = pdfpop.form_config.interpret(form_cfg, data, verbose=True)
+
+    output_path = pathlib.Path(io["output_dir"]) / io["output_name"]
+    pdfpop.pdf.populate_form(io["form"], fields, output_path)
     print(f'\nPopulated form saved to "{output_path}".')
 
 
