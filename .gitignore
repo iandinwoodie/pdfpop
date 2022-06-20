@@ -1,5 +1,6 @@
 # pdfpop artifacts
 pdfpop-example-form.json
+example-form-*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
