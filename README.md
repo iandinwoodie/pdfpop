@@ -64,7 +64,11 @@ This will generate a populated PDF form at the location prescribed by the values
 of`<output_dir>/<output_name>` in the configuration file (e.g.,
 `examples/pdfpop-example-form.pdf`).
 
-# Credits
+# License
 
-* <a href="https://www.flaticon.com/free-icons/popsicle-stick" title="popsicle stick icons">Popsicle stick icons created by Freepik - Flaticon</a>
-* [Third Party License Notices](LICENSE-THIRD-PARTY.txt)
+Copyright (C) 2022 Ian Dinwoodie
+
+* Licensed under [GNU General Public License v3.0](LICENSE.txt).
+* Exceptions:
+    * Material covered by [Third Party Licenses](LICENSE-THIRD-PARTY.txt).
+    * Logo icon: <a href="https://www.flaticon.com/free-icons/popsicle-stick" title="popsicle stick icons">Popsicle stick icons created by Freepik - Flaticon</a>
