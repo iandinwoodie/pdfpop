@@ -1,4 +1,4 @@
-"""Collection of tests for pdfpop's form configuration files."""
+"""Collection of tests for pdfpop's form configuration data."""
 import pathlib
 
 import pytest
@@ -8,7 +8,7 @@ import pdfpop.form_config
 
 def test_get_default_path():
     """Test that the expected default path is returned."""
-    form_path = pathlib.Path("tests/files/blank.pdf")
+    form_path = pathlib.Path("tests/data/blank.pdf")
     expected_path = pathlib.Path().cwd() / "pdfpop-blank.json"
     assert pdfpop.form_config.get_default_path(form_path) == expected_path
     assert (
@@ -24,7 +24,7 @@ def test_get_default_path():
 def test_form_config_exists():
     """Test that the form config exists."""
     form_cfg = pdfpop.form_config.FormConfig(
-        pathlib.Path("tests/files/pdfpop-blank.json")
+        pathlib.Path("tests/data/pdfpop-blank.json")
     )
     assert form_cfg.exists() == True
 
@@ -32,7 +32,7 @@ def test_form_config_exists():
 def test_form_config_exists_false():
     """Test that the form config does not exist."""
     form_cfg = pdfpop.form_config.FormConfig(
-        pathlib.Path("tests/files/does-not-exist.json")
+        pathlib.Path("tests/data/does-not-exist.json")
     )
     assert form_cfg.exists() == False
 
