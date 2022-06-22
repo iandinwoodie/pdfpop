@@ -63,3 +63,8 @@ pdfpop run examples/example-form.json examples/example-data.xlsx
 This will generate a populated PDF form at the location prescribed by the values
 of`<output_dir>/<output_name>` in the configuration file (e.g.,
 `examples/pdfpop-example-form.pdf`).
+
+# Credits
+
+* <a href="https://www.flaticon.com/free-icons/popsicle-stick" title="popsicle stick icons">Popsicle stick icons created by Freepik - Flaticon</a>
+* [Third Party License Notices](LICENSE-THIRD-PARTY.txt)
