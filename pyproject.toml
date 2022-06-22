@@ -20,7 +20,8 @@ dependencies = [
   "pandas>=1.4.2",
   "pdfrw>=0.4",
   "pytest>=7.1.2",
-  "pytest-mock>=3.7.0"
+  "pytest-mock>=3.7.0",
+  "pytest-cov>=3.0.0"
 ]
 dynamic = [
   "version"
@@ -41,3 +42,6 @@ version = {attr = "pdfpop.__version__"}
 
 [tool.black]
 line-length = 80
+
+[tool.pytest.ini_options]
+addopts = "--cov=pdfpop --cov-report=term --cov-report=xml"
