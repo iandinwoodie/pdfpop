@@ -63,8 +63,6 @@ def interpret(
 
     interpreted = {}
     ignore_list = []
-    if verbose:
-        print("\nEvent Log:")
     for key, value in section.items():
         if value is None:
             ignore_list.append(key)

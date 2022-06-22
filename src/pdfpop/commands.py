@@ -1,4 +1,5 @@
 """Module for pdfpop commands."""
+from typing import Any
 import errno
 import os
 import pathlib
@@ -38,27 +39,21 @@ def run(config_path: pathlib.Path, data_path: pathlib.Path) -> None:
         )
     form_cfg = pdfpop.form_config.FormConfig(config_path)
     form_cfg.load()
-    print(f'Populating form "{form_cfg.data["io"]["form"]}".')
     data = _build_data_dict(data_path)
     if len(data) == 0:
         print("No entries found in data file. Exiting.")
         return
-    elif len(data) > 1:
-        print(
-            "Multiple entries found in data file. Only the first will be used."
-        )
-    data = data[0]
     fields = _strip_field_type(form_cfg.data["fields"])
-
-    io = pdfpop.form_config.interpret(form_cfg.data["io"], data)
-    fields = pdfpop.form_config.interpret(
-        form_cfg.data["fields"], data, verbose=True
-    )
-    fields = _strip_field_type(fields)
-
-    output_path = pathlib.Path(io["output_dir"]) / io["output_name"]
-    pdfpop.pdf.populate_form(io["form"], fields, output_path)
-    print(f'\nPopulated form saved to "{output_path}".')
+    for idx, row in enumerate(data):
+        io = pdfpop.form_config.interpret(form_cfg.data["io"], row)
+        form_path = pathlib.Path(io["form"])
+        print(f'\nPopulating form "{form_path}" for row {idx+1}.')
+        row_fields = pdfpop.form_config.interpret(
+            form_cfg.data["fields"], row, verbose=True
+        )
+        output_path = pathlib.Path(io["output_dir"]) / io["output_name"]
+        _run_single_row(form_path, row_fields, output_path)
+        print(f'Populated form saved to "{output_path}".')
 
 
 def _build_data_dict(data_path: pathlib.Path) -> dict:
@@ -78,3 +73,10 @@ def _build_data_dict(data_path: pathlib.Path) -> dict:
 def _strip_field_type(fields: dict[str, str]) -> dict[str, str]:
     """Strip the bracket enclosed field type from the field name."""
     return {k.split(" [")[0]: v for k, v in fields.items()}
+
+
+def _run_single_row(
+    form: pathlib.Path, row: dict[str, Any], output_path: pathlib.Path
+) -> None:
+    """Run a single row of data."""
+    pdfpop.pdf.populate_form(form, row, output_path)
