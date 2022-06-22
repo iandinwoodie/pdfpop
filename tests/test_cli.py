@@ -76,7 +76,7 @@ def test_cli_config(mocker, cli_runner):
     """Test CLI invocation of the `config` command."""
     mock_command = mocker.patch("pdfpop.commands.config")
 
-    form_path = pathlib.Path("tests/files/blank.pdf")
+    form_path = pathlib.Path("tests/data/blank.pdf")
     result = cli_runner("config", str(form_path))
 
     assert result.exit_code == 0
@@ -87,7 +87,7 @@ def test_cli_config_form_path_not_found(mocker, cli_runner):
     """Test `config` command invocation with a form path that doesn't exist."""
     mock_command = mocker.patch("pdfpop.commands.config")
 
-    form_path = pathlib.Path("tests/files/does-not-exist.pdf")
+    form_path = pathlib.Path("tests/data/does-not-exist.pdf")
     result = cli_runner("config", str(form_path))
 
     assert result.exit_code == 2
@@ -99,8 +99,8 @@ def test_cli_run(mocker, cli_runner):
     """Test CLI invocation of the `run` command."""
     mock_command = mocker.patch("pdfpop.commands.run")
 
-    config_path = pathlib.Path("tests/files/pdfpop-blank.json")
-    data_path = pathlib.Path("tests/files/empty.csv")
+    config_path = pathlib.Path("tests/data/pdfpop-blank.json")
+    data_path = pathlib.Path("tests/data/empty.csv")
     result = cli_runner("run", str(config_path), str(data_path))
 
     assert result.exit_code == 0
@@ -113,8 +113,8 @@ def test_cli_run_config_path_not_found(mocker, cli_runner):
     """Test `run` command invocation with a config path that doesn't exist."""
     mock_command = mocker.patch("pdfpop.commands.run")
 
-    config_path = pathlib.Path("tests/files/does-not-exist.json")
-    data_path = pathlib.Path("tests/files/empty.csv")
+    config_path = pathlib.Path("tests/data/does-not-exist.json")
+    data_path = pathlib.Path("tests/data/empty.csv")
     result = cli_runner("run", str(config_path), str(data_path))
 
     assert result.exit_code == 2
@@ -126,8 +126,8 @@ def test_cli_run_data_path_not_found(mocker, cli_runner):
     """Test `run` command invocation with a data path that doesn't exist."""
     mock_command = mocker.patch("pdfpop.commands.run")
 
-    config_path = pathlib.Path("tests/files/pdfpop-blank.json")
-    data_path = pathlib.Path("tests/files/does-not-exist.csv")
+    config_path = pathlib.Path("tests/data/pdfpop-blank.json")
+    data_path = pathlib.Path("tests/data/does-not-exist.csv")
     result = cli_runner("run", str(config_path), str(data_path))
 
     assert result.exit_code == 2
