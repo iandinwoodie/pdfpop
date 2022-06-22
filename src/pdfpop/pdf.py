@@ -1,4 +1,9 @@
-"""PDF handling module for pdfpop."""
+"""PDF handling module for pdfpop.
+
+Contains adaptations from:
+* WestHealth/pdf-form-filler (https://github.com/WestHealth/pdf-form-filler)
+    * Copyright (c) 2021, West Health Institute
+"""
 import pathlib
 
 import pdfrw
