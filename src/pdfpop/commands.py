@@ -22,13 +22,9 @@ def config(form_path: pathlib.Path) -> None:
         raise FileExistsError(
             errno.EEXIST, os.strerror(errno.EEXIST), str(form_cfg.path)
         )
-    form_cfg.data["io"]["form"] = _as_returned_value(str(form_path.resolve()))
-    form_cfg.data["io"]["output_dir"] = _as_returned_value(
-        str(pathlib.Path.cwd())
-    )
-    form_cfg.data["io"]["output_name"] = _as_returned_value(
-        str(f"pdfpop-{form_path.stem}.pdf")
-    )
+    form_cfg.data["io"]["form"] = str(form_path.resolve())
+    form_cfg.data["io"]["output_dir"] = str(pathlib.Path.cwd())
+    form_cfg.data["io"]["output_name"] = str(f"pdfpop-{form_path.stem}.pdf")
     form_cfg.data["fields"] = pdfpop.pdf.get_fields_info(form_path)
     form_cfg.save()
     print(f'Generated form configuration file "{form_cfg.path}".')
@@ -82,8 +78,3 @@ def _build_data_dict(data_path: pathlib.Path) -> dict:
 def _strip_field_type(fields: dict[str, str]) -> dict[str, str]:
     """Strip the bracket enclosed field type from the field name."""
     return {k.split(" [")[0]: v for k, v in fields.items()}
-
-
-def _as_returned_value(value: str) -> str:
-    """Return the value as an executable string returning the value."""
-    return f"return '{value}'"
