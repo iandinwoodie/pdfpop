@@ -12,6 +12,9 @@
         <img src="https://img.shields.io/github/v/tag/iandinwoodie/pdfpop" /></a>
     <a href="https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml" alt="CI/CD Tests">
         <img src="https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml/badge.svg" /></a>
+    <a href="https://codecov.io/gh/iandinwoodie/pdfpop" >
+        <img scr="https://codecov.io/gh/iandinwoodie/pdfpop/branch/main/graph/badge.svg?token=ZNY5FIHA9U"/>
+    </a>
 </p>
 
 ---
