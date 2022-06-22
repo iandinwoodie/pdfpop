@@ -4,15 +4,11 @@
       title="pdfpop" />
 </p>
 
-<p align="left">
-    <a href="LICENSE" alt="License">
-        <img src="https://img.shields.io/github/license/iandinwoodie/pdfpop" /></a>
-    <img src="https://img.shields.io/github/repo-size/iandinwoodie/pdfpop" />
-    <a href="https://github.com/iandinwoodie/pdfpop/releases" alt="Latest Release">
-        <img src="https://img.shields.io/github/v/tag/iandinwoodie/pdfpop" /></a>
-    <a href="https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml" alt="CI/CD Tests">
-        <img src="https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml/badge.svg" /></a>
-</p>
+[![License](https://img.shields.io/github/license/iandinwoodie/pdfpop)](LICENSE.txt)
+[![Release](https://img.shields.io/github/v/tag/iandinwoodie/pdfpop)](https://github.com/iandinwoodie/pdfpop/releases)
+[![CI/CD Tests](https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml/badge.svg)](https://github.com/iandinwoodie/pdfpop/actions/workflows/tests.yml)
+[![Codecov](https://codecov.io/gh/iandinwoodie/pdfpop/branch/main/graph/badge.svg?token=ZNY5FIHA9U)](https://codecov.io/gh/iandinwoodie/pdfpop)
+[![Size](https://img.shields.io/github/repo-size/iandinwoodie/pdfpop)](https://github.com/iandinwoodie/pdfpop)
 
 ---
 
