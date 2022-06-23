@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - This CHANGELOG file.
 
+### Changed
+
+- Converted README links to absolute paths for PyPI compatability.
+
 ## [0.5.0] - 2022-06-22
 
 ### Added
